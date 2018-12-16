@@ -1,0 +1,64 @@
+# The @activeProfile@ will be filtered by gradle build parameter: gradle clean war -Pprofiles=production
+# You must add the 'clean' build command, if you don't edit this yml file. Otherwise, the profiles change
+# will not work. If no profiles specified, the 'default' will be used.
+spring:
+  profiles:
+    active: default
+  output:
+      ansi:
+        enabled: ALWAYS
+
+logging:
+  level:
+    ROOT: info
+
+server:
+  contextPath: /blades-job
+  port: 8083
+
+#公共配置与profiles选择无关
+mybatis:
+  typeAliasesPackage: com.iusofts.blades.job.model
+  mapperLocations: classpath*:com/iusofts/blades/job/**/*Mapper.xml
+
+---
+
+spring:
+  profiles: default
+
+  datasource:
+      url: jdbc:mysql://127.0.0.1:3306/blades_job?zeroDateTimeBehavior=convertToNull
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+      # 使用druid数据源
+      type: com.alibaba.druid.pool.DruidDataSource
+
+quartz:
+  datasource:
+     url: jdbc:mysql://127.0.0.1:3306/blades_job?zeroDateTimeBehavior=convertToNull
+     username: root
+     password: 123456
+     maxconnections: 10
+     driver: com.mysql.jdbc.Driver
+
+########### blades 相关配置 ###########
+blades:
+  application:
+    name: blades-job
+    port: 8083
+  zookeeper:
+    address: 127.0.0.1:2181
+    path: /blades_dev
+  executionTimeOut: 10000
+  waitingTimeOut: 20000
+
+---
+
+spring:
+  profiles: test
+
+---
+
+spring:
+  profiles: production

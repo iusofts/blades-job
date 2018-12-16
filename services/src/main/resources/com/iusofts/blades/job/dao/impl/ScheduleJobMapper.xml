@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iusofts.blades.job.dao.ScheduleJobDao" >
+  <resultMap id="BaseResultMap" type="com.iusofts.blades.job.model.ScheduleJob" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sys_code" property="sysCode" jdbcType="VARCHAR" />
+    <result column="job_type" property="jobType" jdbcType="INTEGER" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+    <result column="alias_name" property="aliasName" jdbcType="VARCHAR" />
+    <result column="job_group" property="jobGroup" jdbcType="VARCHAR" />
+    <result column="job_trigger" property="jobTrigger" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="cron_expression" property="cronExpression" jdbcType="VARCHAR" />
+    <result column="execute_time" property="executeTime" jdbcType="TIMESTAMP" />
+    <result column="is_sync" property="isSync" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="request_param" property="requestParam" jdbcType="VARCHAR" />
+    <result column="request_method" property="requestMethod" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="max_retry_num" property="maxRetryNum" jdbcType="INTEGER" />
+    <result column="retried_num" property="retriedNum" jdbcType="INTEGER" />
+    <result column="retry_status" property="retryStatus" jdbcType="INTEGER" />
+    <result column="total_run_num" property="totalRunNum" jdbcType="INTEGER" />
+    <result column="total_failed_num" property="totalFailedNum" jdbcType="INTEGER" />
+    <result column="last_start_time" property="lastStartTime" jdbcType="TIMESTAMP" />
+    <result column="last_end_time" property="lastEndTime" jdbcType="TIMESTAMP" />
+    <result column="next_fire_time" property="nextFireTime" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, sys_code, job_type, job_name, alias_name, job_group, job_trigger, status, cron_expression,
+    execute_time, is_sync, url, request_param, request_method, description, max_retry_num,
+    retried_num, retry_status, total_run_num, total_failed_num, last_start_time, last_end_time,
+    next_fire_time, create_time, update_time, delete_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.iusofts.blades.job.model.ScheduleJobExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from blades_schedule_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit ${limitStart} , ${limitSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from blades_schedule_job
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from blades_schedule_job
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.iusofts.blades.job.model.ScheduleJobExample" >
+    delete from blades_schedule_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.iusofts.blades.job.model.ScheduleJob" useGeneratedKeys="true" keyProperty="id" >
+    insert into blades_schedule_job (id, sys_code, job_type,
+      job_name, alias_name, job_group,
+      job_trigger, status, cron_expression,
+      execute_time, is_sync, url,
+      request_param, request_method, description,
+      max_retry_num, retried_num, retry_status,
+      total_run_num, total_failed_num, last_start_time,
+      last_end_time, next_fire_time, create_time,
+      update_time, delete_flag)
+    values (#{id,jdbcType=BIGINT}, #{sysCode,jdbcType=VARCHAR}, #{jobType,jdbcType=INTEGER},
+      #{jobName,jdbcType=VARCHAR}, #{aliasName,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR},
+      #{jobTrigger,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{cronExpression,jdbcType=VARCHAR},
+      #{executeTime,jdbcType=TIMESTAMP}, #{isSync,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR},
+      #{requestParam,jdbcType=VARCHAR}, #{requestMethod,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{maxRetryNum,jdbcType=INTEGER}, #{retriedNum,jdbcType=INTEGER}, #{retryStatus,jdbcType=INTEGER},
+      #{totalRunNum,jdbcType=INTEGER}, #{totalFailedNum,jdbcType=INTEGER}, #{lastStartTime,jdbcType=TIMESTAMP},
+      #{lastEndTime,jdbcType=TIMESTAMP}, #{nextFireTime,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iusofts.blades.job.model.ScheduleJob" useGeneratedKeys="true" keyProperty="id" >
+    insert into blades_schedule_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sysCode != null" >
+        sys_code,
+      </if>
+      <if test="jobType != null" >
+        job_type,
+      </if>
+      <if test="jobName != null" >
+        job_name,
+      </if>
+      <if test="aliasName != null" >
+        alias_name,
+      </if>
+      <if test="jobGroup != null" >
+        job_group,
+      </if>
+      <if test="jobTrigger != null" >
+        job_trigger,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="cronExpression != null" >
+        cron_expression,
+      </if>
+      <if test="executeTime != null" >
+        execute_time,
+      </if>
+      <if test="isSync != null" >
+        is_sync,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="requestParam != null" >
+        request_param,
+      </if>
+      <if test="requestMethod != null" >
+        request_method,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="maxRetryNum != null" >
+        max_retry_num,
+      </if>
+      <if test="retriedNum != null" >
+        retried_num,
+      </if>
+      <if test="retryStatus != null" >
+        retry_status,
+      </if>
+      <if test="totalRunNum != null" >
+        total_run_num,
+      </if>
+      <if test="totalFailedNum != null" >
+        total_failed_num,
+      </if>
+      <if test="lastStartTime != null" >
+        last_start_time,
+      </if>
+      <if test="lastEndTime != null" >
+        last_end_time,
+      </if>
+      <if test="nextFireTime != null" >
+        next_fire_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sysCode != null" >
+        #{sysCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null" >
+        #{jobType,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasName != null" >
+        #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null" >
+        #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTrigger != null" >
+        #{jobTrigger,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cronExpression != null" >
+        #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="executeTime != null" >
+        #{executeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isSync != null" >
+        #{isSync,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParam != null" >
+        #{requestParam,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null" >
+        #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="maxRetryNum != null" >
+        #{maxRetryNum,jdbcType=INTEGER},
+      </if>
+      <if test="retriedNum != null" >
+        #{retriedNum,jdbcType=INTEGER},
+      </if>
+      <if test="retryStatus != null" >
+        #{retryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="totalRunNum != null" >
+        #{totalRunNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalFailedNum != null" >
+        #{totalFailedNum,jdbcType=INTEGER},
+      </if>
+      <if test="lastStartTime != null" >
+        #{lastStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastEndTime != null" >
+        #{lastEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nextFireTime != null" >
+        #{nextFireTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.iusofts.blades.job.model.ScheduleJobExample" resultType="java.lang.Integer" >
+    select count(*) from blades_schedule_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update blades_schedule_job
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.sysCode != null" >
+        sys_code = #{record.sysCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobType != null" >
+        job_type = #{record.jobType,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobName != null" >
+        job_name = #{record.jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aliasName != null" >
+        alias_name = #{record.aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobGroup != null" >
+        job_group = #{record.jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobTrigger != null" >
+        job_trigger = #{record.jobTrigger,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.cronExpression != null" >
+        cron_expression = #{record.cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.executeTime != null" >
+        execute_time = #{record.executeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isSync != null" >
+        is_sync = #{record.isSync,jdbcType=INTEGER},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestParam != null" >
+        request_param = #{record.requestParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestMethod != null" >
+        request_method = #{record.requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxRetryNum != null" >
+        max_retry_num = #{record.maxRetryNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.retriedNum != null" >
+        retried_num = #{record.retriedNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.retryStatus != null" >
+        retry_status = #{record.retryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalRunNum != null" >
+        total_run_num = #{record.totalRunNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalFailedNum != null" >
+        total_failed_num = #{record.totalFailedNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastStartTime != null" >
+        last_start_time = #{record.lastStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastEndTime != null" >
+        last_end_time = #{record.lastEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.nextFireTime != null" >
+        next_fire_time = #{record.nextFireTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update blades_schedule_job
+    set id = #{record.id,jdbcType=BIGINT},
+      sys_code = #{record.sysCode,jdbcType=VARCHAR},
+      job_type = #{record.jobType,jdbcType=INTEGER},
+      job_name = #{record.jobName,jdbcType=VARCHAR},
+      alias_name = #{record.aliasName,jdbcType=VARCHAR},
+      job_group = #{record.jobGroup,jdbcType=VARCHAR},
+      job_trigger = #{record.jobTrigger,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      cron_expression = #{record.cronExpression,jdbcType=VARCHAR},
+      execute_time = #{record.executeTime,jdbcType=TIMESTAMP},
+      is_sync = #{record.isSync,jdbcType=INTEGER},
+      url = #{record.url,jdbcType=VARCHAR},
+      request_param = #{record.requestParam,jdbcType=VARCHAR},
+      request_method = #{record.requestMethod,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      max_retry_num = #{record.maxRetryNum,jdbcType=INTEGER},
+      retried_num = #{record.retriedNum,jdbcType=INTEGER},
+      retry_status = #{record.retryStatus,jdbcType=INTEGER},
+      total_run_num = #{record.totalRunNum,jdbcType=INTEGER},
+      total_failed_num = #{record.totalFailedNum,jdbcType=INTEGER},
+      last_start_time = #{record.lastStartTime,jdbcType=TIMESTAMP},
+      last_end_time = #{record.lastEndTime,jdbcType=TIMESTAMP},
+      next_fire_time = #{record.nextFireTime,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iusofts.blades.job.model.ScheduleJob" >
+    update blades_schedule_job
+    <set >
+      <if test="sysCode != null" >
+        sys_code = #{sysCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null" >
+        job_type = #{jobType,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null" >
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasName != null" >
+        alias_name = #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null" >
+        job_group = #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTrigger != null" >
+        job_trigger = #{jobTrigger,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cronExpression != null" >
+        cron_expression = #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="executeTime != null" >
+        execute_time = #{executeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isSync != null" >
+        is_sync = #{isSync,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParam != null" >
+        request_param = #{requestParam,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null" >
+        request_method = #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="maxRetryNum != null" >
+        max_retry_num = #{maxRetryNum,jdbcType=INTEGER},
+      </if>
+      <if test="retriedNum != null" >
+        retried_num = #{retriedNum,jdbcType=INTEGER},
+      </if>
+      <if test="retryStatus != null" >
+        retry_status = #{retryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="totalRunNum != null" >
+        total_run_num = #{totalRunNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalFailedNum != null" >
+        total_failed_num = #{totalFailedNum,jdbcType=INTEGER},
+      </if>
+      <if test="lastStartTime != null" >
+        last_start_time = #{lastStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastEndTime != null" >
+        last_end_time = #{lastEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nextFireTime != null" >
+        next_fire_time = #{nextFireTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iusofts.blades.job.model.ScheduleJob" >
+    update blades_schedule_job
+    set sys_code = #{sysCode,jdbcType=VARCHAR},
+      job_type = #{jobType,jdbcType=INTEGER},
+      job_name = #{jobName,jdbcType=VARCHAR},
+      alias_name = #{aliasName,jdbcType=VARCHAR},
+      job_group = #{jobGroup,jdbcType=VARCHAR},
+      job_trigger = #{jobTrigger,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      cron_expression = #{cronExpression,jdbcType=VARCHAR},
+      execute_time = #{executeTime,jdbcType=TIMESTAMP},
+      is_sync = #{isSync,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      request_param = #{requestParam,jdbcType=VARCHAR},
+      request_method = #{requestMethod,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      max_retry_num = #{maxRetryNum,jdbcType=INTEGER},
+      retried_num = #{retriedNum,jdbcType=INTEGER},
+      retry_status = #{retryStatus,jdbcType=INTEGER},
+      total_run_num = #{totalRunNum,jdbcType=INTEGER},
+      total_failed_num = #{totalFailedNum,jdbcType=INTEGER},
+      last_start_time = #{lastStartTime,jdbcType=TIMESTAMP},
+      last_end_time = #{lastEndTime,jdbcType=TIMESTAMP},
+      next_fire_time = #{nextFireTime,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
