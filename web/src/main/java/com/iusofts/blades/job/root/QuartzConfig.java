@@ -62,6 +62,7 @@ public class QuartzConfig {
         prop.put("org.quartz.jobStore.isClustered", "true");
         prop.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
         prop.put("org.quartz.threadPool.threadCount", "5");
+        prop.put("org.quartz.jobStore.misfireThreshold", "60000");
 
         prop.put("org.quartz.dataSource.quartzDataSource.driver", driver);
         prop.put("org.quartz.dataSource.quartzDataSource.URL", url);
