@@ -24,6 +24,6 @@ nextFireTime(下次重试时间) = intervalTime（本次重试间隔） - preInt
 ## add
 ![add](http://blades.img.iusofts.com/job/job-add.png)
 ## detail
-![detail](http://blades.img.iusofts.com/job/job-detail.png)
+![detail](http://blades.img.iusofts.com/job/job-detail2.png)
 ## log
-![log](http://blades.img.iusofts.com/job/job-log.png)
+![log](http://blades.img.iusofts.com/job/job-log2.png)
